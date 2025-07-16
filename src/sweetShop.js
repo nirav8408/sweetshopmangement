@@ -40,9 +40,6 @@ restockSweet(id, quantity) {
   sweet.quantity += quantity;
 }
 
-
-
-
 }
 
 module.exports = { Sweet, SweetShop };

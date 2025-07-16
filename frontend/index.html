@@ -2,17 +2,114 @@
 <html>
 <head>
   <title>Sweet Shop</title>
+
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    input { margin: 5px; }
-    table, th, td { border: 1px solid #000; border-collapse: collapse; padding: 8px; }
-    th { background-color: #f06292; color: white; }
-  </style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fff3f5;
+    padding: 40px;
+    margin: 0;
+    text-align: center;
+  }
+
+  h1 {
+    color: #d81b60;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    color: #333;
+  }
+
+  input, select, button {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  button {
+    background-color: #d81b60;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #ad1457;
+  }
+
+  table {
+    margin: 20px auto;
+    width: 90%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 12px;
+    border: 1px solid #d81b60;
+  }
+
+  th {
+    background-color: #d81b60;
+    color: white;
+  }
+
+  td {
+    background-color: white;
+  }
+
+  .form-section, .search-section {
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 600px) {
+    input, select, button {
+      width: 90%;
+      margin-top: 8px;
+    }
+
+    table, th, td {
+      font-size: 12px;
+    }
+  }
+</style>
+
 </head>
 <body>
   <h1>Sweet Shop Management</h1>
+    <h3>Search Sweets</h3>
+<select id="searchName">
+  <option value="">All Names</option>
+</select>
+
+<select id="searchCategory">
+  <option value="">All Categories</option>
+  <option value="Nut-Based">Nut-Based</option>
+  <option value="Milk-Based">Milk-Based</option>
+  <option value="Vegetable-Based">Vegetable-Based</option>
+  <option value="Chocolate">Chocolate</option>
+  <option value="Candy">Candy</option>
+  <option value="Pastry">Pastry</option>
+</select>
+
+<select id="searchPrice">
+  <option value="">All Prices</option>
+  <option value="0-10">0 - 10</option>
+  <option value="10-30">10 - 30</option>
+  <option value="30-50">30 - 50</option>
+  <option value="50+">50+</option>
+</select>
+
+<button onclick="searchSweets()">Search</button>
+<button onclick="clearSearch()">Clear</button>
+
 
   <h3>Add a Sweet</h3>
+
+  
   <input id="id" placeholder="ID" />
   <input id="name" placeholder="Name" />
   <input id="category" placeholder="Category" />

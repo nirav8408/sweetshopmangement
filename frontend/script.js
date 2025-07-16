@@ -36,6 +36,9 @@ class SweetShop {
   sweet.quantity -= quantity;
 }
 
+
+
+
 restockSweet(id, quantity) {
   const sweet = this.sweets.find(s => s.id == id);
   if (!sweet) throw new Error("Sweet not found.");
@@ -68,11 +71,13 @@ function deleteSweet(id) {
   renderTable();
 }
 
-function renderTable() {
+function renderTable(data = null) {
+  const sweets = data || shop.getAllSweets();
   const tbody = document.getElementById("sweetTable");
   tbody.innerHTML = "";
 
-  shop.getAllSweets().forEach(sweet => {
+  sweets.forEach(sweet => {
+
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${sweet.id}</td>
@@ -87,6 +92,8 @@ function renderTable() {
     </td>`;
     tbody.appendChild(row);
   });
+
+   updateSearchNameOptions();
 }
 
 function clearInputs() {
@@ -126,5 +133,54 @@ function restockSweet(id) {
     alert(err.message);
   }
 
+  renderTable();
+}
+
+
+
+function searchSweets() {
+  const selectedName = document.getElementById("searchName").value;
+  const selectedCategory = document.getElementById("searchCategory").value;
+  const selectedPrice = document.getElementById("searchPrice").value;
+
+  let minPrice = 0;
+  let maxPrice = Infinity;
+
+  if (selectedPrice.includes("-")) {
+    [minPrice, maxPrice] = selectedPrice.split("-").map(Number);
+  } else if (selectedPrice === "50+") {
+    minPrice = 50;
+  }
+
+  const filtered = shop.getAllSweets().filter(sweet => {
+    const nameMatch = selectedName === "" || sweet.name === selectedName;
+    const categoryMatch = selectedCategory === "" || sweet.category === selectedCategory;
+    const priceMatch = sweet.price >= minPrice && sweet.price <= maxPrice;
+    return nameMatch && categoryMatch && priceMatch;
+  });
+
+  renderTable(filtered);
+}
+
+
+function updateSearchNameOptions() {
+  const nameSelect = document.getElementById("searchName");
+  nameSelect.innerHTML = '<option value="">All Names</option>';
+
+  const names = [...new Set(shop.getAllSweets().map(s => s.name))];
+
+  names.forEach(name => {
+    const option = document.createElement("option");
+    option.value = name; // must match exactly
+    option.textContent = name;
+    nameSelect.appendChild(option);
+  });
+}
+
+
+function clearSearch() {
+  document.getElementById("searchName").value = "";
+  document.getElementById("searchCategory").value = "";
+  document.getElementById("searchPrice").value = "";
   renderTable();
 }
