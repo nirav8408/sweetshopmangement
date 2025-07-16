@@ -18,7 +18,7 @@ class SweetShop {
   }
 
   deleteSweet(id) {
-    this.sweets = this.sweets.filter(s => s.id != id);
+    this.sweets = this.sweets.filter((s) => s.id != id);
   }
 
   getAllSweets() {
@@ -26,28 +26,22 @@ class SweetShop {
   }
 
   purchaseSweet(id, quantity) {
-  const sweet = this.sweets.find(s => s.id == id);
-  if (!sweet) throw new Error("Sweet not found.");
+    const sweet = this.sweets.find((s) => s.id == id);
+    if (!sweet) throw new Error("Sweet not found.");
 
-  if (sweet.quantity < quantity) {
-    throw new Error("Not enough stock to complete purchase.");
+    if (sweet.quantity < quantity) {
+      throw new Error("Not enough stock to complete purchase.");
+    }
+
+    sweet.quantity -= quantity;
   }
 
-  sweet.quantity -= quantity;
-}
+  restockSweet(id, quantity) {
+    const sweet = this.sweets.find((s) => s.id == id);
+    if (!sweet) throw new Error("Sweet not found.");
 
-
-
-
-restockSweet(id, quantity) {
-  const sweet = this.sweets.find(s => s.id == id);
-  if (!sweet) throw new Error("Sweet not found.");
-
-  sweet.quantity += quantity;
-}
-
-
-
+    sweet.quantity += quantity;
+  }
 }
 
 const shop = new SweetShop();
@@ -76,8 +70,7 @@ function renderTable(data = null) {
   const tbody = document.getElementById("sweetTable");
   tbody.innerHTML = "";
 
-  sweets.forEach(sweet => {
-
+  sweets.forEach((sweet) => {
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${sweet.id}</td>
@@ -93,7 +86,7 @@ function renderTable(data = null) {
     tbody.appendChild(row);
   });
 
-   updateSearchNameOptions();
+  updateSearchNameOptions();
 }
 
 function clearInputs() {
@@ -103,9 +96,6 @@ function clearInputs() {
   document.getElementById("price").value = "";
   document.getElementById("quantity").value = "";
 }
-
-
-
 
 function purchaseSweet(id) {
   const qty = prompt("Enter quantity to purchase:");
@@ -121,7 +111,6 @@ function purchaseSweet(id) {
   renderTable();
 }
 
-
 function restockSweet(id) {
   const qty = prompt("Enter quantity to restock:");
   if (qty === null) return;
@@ -135,8 +124,6 @@ function restockSweet(id) {
 
   renderTable();
 }
-
-
 
 function searchSweets() {
   const selectedName = document.getElementById("searchName").value;
@@ -152,9 +139,10 @@ function searchSweets() {
     minPrice = 50;
   }
 
-  const filtered = shop.getAllSweets().filter(sweet => {
+  const filtered = shop.getAllSweets().filter((sweet) => {
     const nameMatch = selectedName === "" || sweet.name === selectedName;
-    const categoryMatch = selectedCategory === "" || sweet.category === selectedCategory;
+    const categoryMatch =
+      selectedCategory === "" || sweet.category === selectedCategory;
     const priceMatch = sweet.price >= minPrice && sweet.price <= maxPrice;
     return nameMatch && categoryMatch && priceMatch;
   });
@@ -162,21 +150,19 @@ function searchSweets() {
   renderTable(filtered);
 }
 
-
 function updateSearchNameOptions() {
   const nameSelect = document.getElementById("searchName");
   nameSelect.innerHTML = '<option value="">All Names</option>';
 
-  const names = [...new Set(shop.getAllSweets().map(s => s.name))];
+  const names = [...new Set(shop.getAllSweets().map((s) => s.name))];
 
-  names.forEach(name => {
+  names.forEach((name) => {
     const option = document.createElement("option");
-    option.value = name; // must match exactly
+    option.value = name;
     option.textContent = name;
     nameSelect.appendChild(option);
   });
 }
-
 
 function clearSearch() {
   document.getElementById("searchName").value = "";

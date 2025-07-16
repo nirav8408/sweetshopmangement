@@ -18,28 +18,25 @@ class SweetShop {
   }
 
   deleteSweet(id) {
-  this.sweets = this.sweets.filter(sweet => sweet.id !== id);
-    }
-
-
-    purchaseSweet(id, quantity) {
-  const sweet = this.sweets.find(s => s.id == id);
-  if (!sweet) throw new Error("Sweet not found.");
-
-  if (sweet.quantity < quantity) {
-    throw new Error("Not enough stock to complete purchase.");
+    this.sweets = this.sweets.filter((sweet) => sweet.id !== id);
   }
 
-  sweet.quantity -= quantity;
-}
+  purchaseSweet(id, quantity) {
+    const sweet = this.sweets.find((s) => s.id == id);
+    if (!sweet) throw new Error("Sweet not found.");
 
+    if (sweet.quantity < quantity) {
+      throw new Error("Not enough stock to complete purchase.");
+    }
 
-restockSweet(id, quantity) {
-  const sweet = this.sweets.find(s => s.id == id);
-  if (!sweet) throw new Error("Sweet not found.");
-  sweet.quantity += quantity;
-}
+    sweet.quantity -= quantity;
+  }
 
+  restockSweet(id, quantity) {
+    const sweet = this.sweets.find((s) => s.id == id);
+    if (!sweet) throw new Error("Sweet not found.");
+    sweet.quantity += quantity;
+  }
 }
 
 module.exports = { Sweet, SweetShop };
