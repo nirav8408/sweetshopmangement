@@ -1,5 +1,7 @@
 const { Sweet, SweetShop } = require('../src/sweetShop');
 
+
+//testing for adding
 describe('SweetShop', () => {
   test('should add a sweet to the shop', () => {
     const shop = new SweetShop();
@@ -12,6 +14,8 @@ describe('SweetShop', () => {
   });
 
 
+
+  //testing for deleting
   test('should delete a sweet by ID', () => {
   const shop = new SweetShop();
   const sweet1 = new Sweet(1001, "Kaju Katli", "Nut-Based", 50, 20);
@@ -25,5 +29,31 @@ describe('SweetShop', () => {
   expect(shop.sweets.length).toBe(1);
   expect(shop.sweets[0].id).toBe(1002);
 });
+
+
+
+//testing of purchase and reducing stock
+test('should purchase a sweet and reduce stock', () => {
+  const shop = new SweetShop();
+  const sweet = new Sweet(1003, "Rasgulla", "Milk-Based", 25, 10);
+  shop.addSweet(sweet);
+
+  shop.purchaseSweet(1003, 3);
+
+  expect(shop.sweets[0].quantity).toBe(7);
+});
+
+
+//checking stock error
+test('should throw error if not enough stock during purchase', () => {
+  const shop = new SweetShop();
+  const sweet = new Sweet(1004, "Ladoo", "Gram-Based", 20, 5);
+  shop.addSweet(sweet);
+
+  expect(() => {
+    shop.purchaseSweet(1004, 10);
+  }).toThrow("Not enough stock to complete purchase.");
+});
+
 
 });
