@@ -56,4 +56,29 @@ test('should throw error if not enough stock during purchase', () => {
 });
 
 
+
+//restock testing
+test('should restock a sweet and increase quantity', () => {
+  const shop = new SweetShop();
+  const sweet = new Sweet(1005, "Barfi", "Milk-Based", 40, 5);
+  shop.addSweet(sweet);
+
+  shop.restockSweet(1005, 10);
+
+  expect(shop.sweets[0].quantity).toBe(15);
+});
+
+
+
+test('should throw error if sweet not found during restock', () => {
+  const shop = new SweetShop();
+
+  expect(() => {
+    shop.restockSweet(9999, 5);
+  }).toThrow("Sweet not found.");
+});
+
+
+
+
 });

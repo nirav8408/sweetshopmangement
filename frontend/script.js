@@ -36,6 +36,15 @@ class SweetShop {
   sweet.quantity -= quantity;
 }
 
+restockSweet(id, quantity) {
+  const sweet = this.sweets.find(s => s.id == id);
+  if (!sweet) throw new Error("Sweet not found.");
+
+  sweet.quantity += quantity;
+}
+
+
+
 }
 
 const shop = new SweetShop();
@@ -74,6 +83,7 @@ function renderTable() {
       <td>
         <button onclick="deleteSweet(${sweet.id})">Delete</button>
         <button onclick="purchaseSweet(${sweet.id})">Buy</button>
+         <button onclick="restockSweet(${sweet.id})">Restock</button>
     </td>`;
     tbody.appendChild(row);
   });
@@ -97,6 +107,21 @@ function purchaseSweet(id) {
   try {
     shop.purchaseSweet(id, parseInt(qty));
     alert("Purchase successful!");
+  } catch (err) {
+    alert(err.message);
+  }
+
+  renderTable();
+}
+
+
+function restockSweet(id) {
+  const qty = prompt("Enter quantity to restock:");
+  if (qty === null) return;
+
+  try {
+    shop.restockSweet(id, parseInt(qty));
+    alert("Restock successful!");
   } catch (err) {
     alert(err.message);
   }
