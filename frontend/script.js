@@ -24,6 +24,18 @@ class SweetShop {
   getAllSweets() {
     return this.sweets;
   }
+
+  purchaseSweet(id, quantity) {
+  const sweet = this.sweets.find(s => s.id == id);
+  if (!sweet) throw new Error("Sweet not found.");
+
+  if (sweet.quantity < quantity) {
+    throw new Error("Not enough stock to complete purchase.");
+  }
+
+  sweet.quantity -= quantity;
+}
+
 }
 
 const shop = new SweetShop();
@@ -59,8 +71,10 @@ function renderTable() {
       <td>${sweet.category}</td>
       <td>${sweet.price}</td>
       <td>${sweet.quantity}</td>
-      <td><button onclick="deleteSweet(${sweet.id})">Delete</button></td>
-    `;
+      <td>
+        <button onclick="deleteSweet(${sweet.id})">Delete</button>
+        <button onclick="purchaseSweet(${sweet.id})">Buy</button>
+    </td>`;
     tbody.appendChild(row);
   });
 }
@@ -71,4 +85,21 @@ function clearInputs() {
   document.getElementById("category").value = "";
   document.getElementById("price").value = "";
   document.getElementById("quantity").value = "";
+}
+
+
+
+
+function purchaseSweet(id) {
+  const qty = prompt("Enter quantity to purchase:");
+  if (qty === null) return;
+
+  try {
+    shop.purchaseSweet(id, parseInt(qty));
+    alert("Purchase successful!");
+  } catch (err) {
+    alert(err.message);
+  }
+
+  renderTable();
 }
