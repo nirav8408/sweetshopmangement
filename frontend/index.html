@@ -1,11 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <title>Sweet Shop</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input { margin: 5px; }
+    table, th, td { border: 1px solid #000; border-collapse: collapse; padding: 8px; }
+    th { background-color: #f06292; color: white; }
+  </style>
 </head>
 <body>
-    
+  <h1>Sweet Shop Management</h1>
+
+  <h3>Add a Sweet</h3>
+  <input id="id" placeholder="ID" />
+  <input id="name" placeholder="Name" />
+  <input id="category" placeholder="Category" />
+  <input id="price" placeholder="Price" />
+  <input id="quantity" placeholder="Quantity" />
+  <button onclick="addSweet()">Add</button>
+
+  <h3>Available Sweets</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Qty</th><th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="sweetTable"></tbody>
+  </table>
+
+  <script src="script.js"></script>
 </body>
 </html>
